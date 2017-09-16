@@ -1,9 +1,7 @@
 package org.anstreth.pcl
 
-object Parser extends App {
-
-  override def main(args: Array[String]): Unit = {
-    println("Hello, Scala!")
-  }
-
+trait Parser[T] {
+  def parse(s: String): T
 }
+
+trait LexemsParser extends Parser[List[String]]
