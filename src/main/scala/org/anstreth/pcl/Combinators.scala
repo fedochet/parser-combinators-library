@@ -19,4 +19,12 @@ object Combinators {
       case Error() => p2.parse(original)
     }
   }
+
+  def opt[T](p: Parser[T], defaultValue: T): Parser[T] = (original) => {
+    val parseResult = p.parse(original)
+    parseResult match {
+      case (_, Success(_)) => parseResult
+      case (_, Error()) => (original, Success(defaultValue))
+    }
+  }
 }
