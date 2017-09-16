@@ -3,20 +3,20 @@ package org.anstreth.pcl
 import org.scalatest.{FlatSpec, Matchers}
 
 class CombineCombinatorTest extends FlatSpec with Matchers {
-  private val aParser = SymbolParser('a')
-  private val bParser = SymbolParser('b')
-  private val composed = Combinators.combine(aParser, bParser)((a, b) => "" + a + b)
+  private val aParser = TokenParser("a")
+  private val bParser = TokenParser("b")
+  private val composed = Combinators.combine(aParser, bParser)((a, b) => a + b)
 
-  "A combination of two SymbolParsers" should "match two symbols" in {
-    composed.parse("abc".toList) should be ("c".toList, Success("ab"))
+  "A combination of two TokenParsers" should "match two tokens one after another" in {
+    composed.parse("abc") should be ("c", Success("ab"))
   }
 
-  it should "fail if first symbol does not match" in {
-    composed.parse("bc".toList) should be ("bc".toList, Error())
+  it should "fail if first parser cannot parse" in {
+    composed.parse("bc") should be ("bc", Error())
   }
 
-  it should "fail if second symbol does not match" in {
-    composed.parse("ac".toList) should be ("ac".toList, Error())
+  it should "fail if second parser cannot parse" in {
+    composed.parse("ac") should be ("ac", Error())
   }
 
 }
