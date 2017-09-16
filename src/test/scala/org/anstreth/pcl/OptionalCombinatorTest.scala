@@ -3,7 +3,7 @@ package org.anstreth.pcl
 import org.scalatest.{FlatSpec, Matchers}
 
 class OptionalCombinatorTest extends FlatSpec with Matchers {
-  private val aParser = TokenParser("a")
+  private val aParser = SimpleTokenParser("a")
   val defaultValue = "default"
   private val optional = Combinators.opt(aParser, defaultValue)
 

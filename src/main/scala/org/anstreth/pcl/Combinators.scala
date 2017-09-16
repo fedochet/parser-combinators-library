@@ -27,4 +27,9 @@ object Combinators {
       case (_, Error()) => (original, Success(defaultValue))
     }
   }
+
+  def repeat[T, P](p: Parser[T], defaultValue: P)(combiner: (T, P) => P): Parser[P] = (original) => {
+    val p1 = opt(combine(p, repeat(p, defaultValue)(combiner))(combiner), defaultValue)
+    p1.parse(original)
+  }
 }
