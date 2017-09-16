@@ -6,6 +6,4 @@ object ParserApp extends App {
     println("Hello, Scala!")
   }
 
-  def parse(s: String, parser: LexemsParser): List[String] = parser.parse(s)
-
 }
