@@ -11,4 +11,12 @@ object Combinators {
       case Error() => (original, Error())
     }
   }
+
+  def alt[T](p1: Parser[T], p2: Parser[T]): Parser[T] = (original) => {
+    val (remainder1, parseResult) = p1.parse(original)
+    parseResult match {
+      case Success(_) => (remainder1, parseResult)
+      case Error() => p2.parse(original)
+    }
+  }
 }

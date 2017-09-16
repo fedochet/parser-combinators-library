@@ -7,7 +7,7 @@ class CombineCombinatorTest extends FlatSpec with Matchers {
   private val bParser = TokenParser("b")
   private val composed = Combinators.combine(aParser, bParser)((a, b) => a + b)
 
-  "A combination of two TokenParsers" should "match two tokens one after another" in {
+  "A compose of two TokenParsers" should "match two tokens one after another" in {
     composed.parse("abc") should be ("c", Success("ab"))
   }
 
