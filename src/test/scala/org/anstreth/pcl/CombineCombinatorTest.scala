@@ -3,8 +3,8 @@ package org.anstreth.pcl
 import org.scalatest.{FlatSpec, Matchers}
 
 class CombineCombinatorTest extends FlatSpec with Matchers {
-  private val aParser = new SymbolParser('a')
-  private val bParser = new SymbolParser('b')
+  private val aParser = SymbolParser('a')
+  private val bParser = SymbolParser('b')
   private val composed = Combinators.combine(aParser, bParser)((a, b) => "" + a + b)
 
   "A combination of two SymbolParsers" should "match two symbols" in {
