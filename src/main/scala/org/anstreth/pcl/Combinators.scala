@@ -32,4 +32,11 @@ object Combinators {
     val p1 = opt(combine(p, repeat(p, defaultValue)(combiner))(combiner), defaultValue)
     p1.parse(original)
   }
+
+  def map[T, P](p: Parser[T], map: T => P): Parser[P] = (original) => {
+    p.parse(original) match {
+      case (remainder, Success(t)) => (remainder, Success(map(t)))
+      case (remainder, Error()) => (remainder, Error());
+    }
+  }
 }
