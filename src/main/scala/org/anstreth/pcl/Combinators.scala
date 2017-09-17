@@ -40,5 +40,13 @@ object Combinators {
     }
   }
 
+  /**
+    * Combinator to create recursive parsers poiniting to themselves.
+    * To create local variable parsers use lazy keyword; if parser is a field variable,
+    * lazy is not required.
+    * @param supplier a function which returns parser
+    * @tparam T parameter type of parser
+    * @return a parser which is equivalent to that returned from a supplier
+    */
   def rec[T](supplier: () => Parser[T]): Parser[T] = (original) => supplier().parse(original)
 }
