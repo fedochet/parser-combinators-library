@@ -20,4 +20,17 @@ class AltCombinatorTest extends FlatSpec with Matchers {
     altParser.parse("cbc") should be("cbc", Error())
   }
 
+  "An alternative of three tokens" should "parse any of three tokens successfully" in {
+    val parser = Combinators.alt(
+      SimpleTokenParser("0"),
+      SimpleTokenParser("1"),
+      SimpleTokenParser("2")
+    )
+
+    parser.parse("0") should be ("", Success(List("0")))
+    parser.parse("1") should be ("", Success(List("1")))
+    parser.parse("2") should be ("", Success(List("2")))
+    parser.parse("3") should be ("3", Error())
+  }
+
 }

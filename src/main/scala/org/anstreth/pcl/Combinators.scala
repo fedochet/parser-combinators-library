@@ -20,6 +20,11 @@ object Combinators {
     }
   }
 
+  def alt[T](p1: Parser[T], p2: Parser[T], pRest: Parser[T]*): Parser[T] = {
+    pRest.foldLeft(alt(p1, p2))(alt)
+  }
+
+
   def opt[T](p: Parser[T]): Parser[T] = (original) => {
     val parseResult = p.parse(original)
     parseResult match {
