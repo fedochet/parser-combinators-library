@@ -4,8 +4,8 @@ package org.anstreth.pcl
 import org.scalatest.{FlatSpec, Matchers}
 
 class CombineCombinatorTest extends FlatSpec with Matchers {
-  private val aParser = SimpleTokenParser("a")
-  private val bParser = SimpleTokenParser("b")
+  private val aParser = SimpleToken("a")
+  private val bParser = SimpleToken("b")
   private val combined = Combinators.combine(aParser, bParser)
 
   "A compose of two TokenParsers" should "match two tokens one after another" in {
@@ -22,9 +22,9 @@ class CombineCombinatorTest extends FlatSpec with Matchers {
 
   "A compose of three TokenParsers" should "match three tokens one after another" in {
     val threeCombined = Combinators.combine(
-      SimpleTokenParser("a"),
-      SimpleTokenParser("b"),
-      SimpleTokenParser("c")
+      SimpleToken("a"),
+      SimpleToken("b"),
+      SimpleToken("c")
     )
 
     threeCombined.parse("abc") should be ("", Success(List("a", "b", "c")))

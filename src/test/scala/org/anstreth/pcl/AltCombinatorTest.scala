@@ -4,8 +4,8 @@ package org.anstreth.pcl
 import org.scalatest.{FlatSpec, Matchers}
 
 class AltCombinatorTest extends FlatSpec with Matchers {
-  private val aParser = SimpleTokenParser("a")
-  private val bParser = SimpleTokenParser("b")
+  private val aParser = SimpleToken("a")
+  private val bParser = SimpleToken("b")
   private val altParser = Combinators.alt(aParser, bParser)
 
   "An alternative of two TokenParsers" should "parse first token successfully" in {
@@ -22,9 +22,9 @@ class AltCombinatorTest extends FlatSpec with Matchers {
 
   "An alternative of three tokens" should "parse any of three tokens successfully" in {
     val parser = Combinators.alt(
-      SimpleTokenParser("0"),
-      SimpleTokenParser("1"),
-      SimpleTokenParser("2")
+      SimpleToken("0"),
+      SimpleToken("1"),
+      SimpleToken("2")
     )
 
     parser.parse("0") should be ("", Success(List("0")))

@@ -4,7 +4,7 @@ package org.anstreth.pcl
 import org.scalatest.{FlatSpec, Matchers}
 
 class RepeatCombinatorTest extends FlatSpec with Matchers {
-  private val aParser = SimpleTokenParser("a")
+  private val aParser = SimpleToken("a")
   private val repeat = Combinators.repeat(aParser)
   "Repeat combinator of TokenCombinator" should "parse missing token as default value" in {
     repeat.parse("bbb") should be("bbb", Success(Nil))
