@@ -20,6 +20,10 @@ object Combinators {
     }
   }
 
+  def alt[T](p1: Parser[T], p2: Parser[T], pRest: Parser[T]*): Parser[T] = (original) => {
+    pRest.foldLeft(alt(p1, p2))(alt).parse(original)
+  }
+
   def opt[T](p: Parser[T], defaultValue: T): Parser[T] = (original) => {
     val parseResult = p.parse(original)
     parseResult match {
@@ -31,13 +35,6 @@ object Combinators {
   def repeat[T, P](p: Parser[T], defaultValue: P)(combiner: (T, P) => P): Parser[P] = (original) => {
     val p1 = opt(combine(p, repeat(p, defaultValue)(combiner))(combiner), defaultValue)
     p1.parse(original)
-  }
-
-  def map[T, P](p: Parser[T], map: T => P): Parser[P] = (original) => {
-    p.parse(original) match {
-      case (remainder, Success(t)) => (remainder, Success(map(t)))
-      case (remainder, Error()) => (remainder, Error());
-    }
   }
 
   /**
