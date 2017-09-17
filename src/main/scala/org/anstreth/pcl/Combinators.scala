@@ -12,6 +12,10 @@ object Combinators {
     }
   }
 
+  def combine[T](p1: Parser[T], p2: Parser[T], pRest: Parser[T]*): Parser[T] = {
+    pRest.foldLeft(combine(p1, p2))(combine)
+  }
+
   def alt[T](p1: Parser[T], p2: Parser[T]): Parser[T] = (original) => {
     val (remainder1, parseResult) = p1.parse(original)
     parseResult match {
