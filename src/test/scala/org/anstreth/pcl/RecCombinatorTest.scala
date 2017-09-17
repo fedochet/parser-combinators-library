@@ -1,7 +1,6 @@
 package org.anstreth.pcl
 
-import org.anstreth.pcl.Combinators.{alt, combine, rec}
-import org.anstreth.pcl.Success.success
+import org.anstreth.pcl.Combinators._
 import org.scalatest.{FlatSpec, Matchers}
 
 class RecCombinatorTest extends FlatSpec with Matchers {
@@ -9,18 +8,18 @@ class RecCombinatorTest extends FlatSpec with Matchers {
   private val recursive = rec(() => aParser)
 
   "A Recursive parser of SimpleTokenParser" should "behave like SimpleTokenParser" in {
-    recursive.parse("a") should be ("", success("a"))
-    recursive.parse("ab") should be ("b", success("a"))
-    recursive.parse("b") should be ("b", Error())
+    recursive.parse("a") should be("", Success(List("a")))
+    recursive.parse("ab") should be("b", Success(List("a")))
+    recursive.parse("b") should be("b", Error())
   }
 
   it should "work with lambda pointing to itself" in {
     lazy val parser: Parser[String] = alt(
       SimpleTokenParser("b"),
-      combine(SimpleTokenParser("a"), rec(()=>parser))(_+_)
+      combine(SimpleTokenParser("a"), rec(() => parser))
     )
 
-    parser.parse("aaaab") should be ("", success("aaaab"))
-    parser.parse("aaaa") should be ("aaaa", Error())
+    parser.parse("aaaab") should be("", Success(List("a", "a", "a", "a", "b")))
+    parser.parse("aaaa") should be("aaaa", Error())
   }
 }
