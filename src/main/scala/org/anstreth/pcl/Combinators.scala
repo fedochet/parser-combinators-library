@@ -39,4 +39,6 @@ object Combinators {
       case (remainder, Error()) => (remainder, Error());
     }
   }
+
+  def rec[T](supplier: () => Parser[T]): Parser[T] = (original) => supplier().parse(original)
 }
